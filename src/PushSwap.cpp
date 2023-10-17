@@ -176,7 +176,6 @@ void PushSwap::_setStackIndex()
 void	PushSwap::_sortBig()
 {
 	this->_pushAllSave3();
-
 	while (!this->_stackB.empty())
 	{
 		this->_WhereItFitInA();
@@ -279,21 +278,18 @@ void	PushSwap::_doMoves()
 		}
 	}
 
-	// std::cout << "-----------------------------------	" << std::endl;
 	if (movesInA < 0 && movesInB < 0)
 		this->_reverseBoth(movesInA, movesInB);
 	else if (movesInA > 0 && movesInB > 0)
 		this->_rotateBoth(movesInA, movesInB);
 	this->_rotateA(movesInA);
 	this->_rotateB(movesInB);
-	// std::cout << "outMA: " << movesInA << " outMB: " << movesInB << std::endl;
 
 	this->_pa();
 }
 
 void	PushSwap::_reverseBoth(int &movesInA, int &movesInB)
 {
-	// std::cout << "InRRR: " << movesInA << " " << movesInB << std::endl;
 	while (movesInA < 0 && movesInB < 0)
 	{
 		movesInA++;
@@ -304,7 +300,6 @@ void	PushSwap::_reverseBoth(int &movesInA, int &movesInB)
 
 void	PushSwap::_rotateBoth(int &movesInA, int &movesInB)
 {
-	// std::cout << "InRR: " << movesInA << " " << movesInB << std::endl;
 	while (movesInA > 0 && movesInB > 0)
 	{
 		movesInA--;
@@ -315,7 +310,6 @@ void	PushSwap::_rotateBoth(int &movesInA, int &movesInB)
 
 void	PushSwap::_rotateA(int &movesInA)
 {
-	// std::cout << "InRA: " << movesInA << std::endl;
 	while (movesInA)
 	{
 		if (movesInA > 0)
@@ -333,8 +327,7 @@ void	PushSwap::_rotateA(int &movesInA)
 
 void	PushSwap::_rotateB(int &movesInB)
 {
-	// std::cout << "InRB: " << movesInB << std::endl;
-	while (movesInB > 0)
+	while (movesInB)
 	{
 		if (movesInB > 0)
 		{
