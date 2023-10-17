@@ -28,6 +28,7 @@ static bool hasDuplicate(stackVector stack, int number)
 PushSwap::PushSwap(int ac, char **av)
 {
 	this->_checkInput(ac, av);
+	this->_getMainIndex();
 }
 
 PushSwap::~PushSwap(){}
@@ -71,4 +72,23 @@ void PushSwap::_addNumber(int number)
 	tmp.movesInB = -1;
 
 	this->_stackA.push_back(tmp);
+}
+
+void PushSwap::_getMainIndex()
+{
+	for (size_t i = this->_stackA.size(); i > 0; i--)
+	{
+		stackVector::iterator	tmp;
+		stackVector::iterator	it;
+		int	max = INT_MIN;
+		for (it = this->_stackA.begin(); it != this->_stackA.end(); it++)
+		{
+			if (it->index == 0 && it->number > max)
+			{
+				max = it->number;
+				tmp = it;
+			}
+		}
+		tmp->index = i;
+	}
 }
