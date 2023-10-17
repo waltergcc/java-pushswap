@@ -54,6 +54,18 @@ static void getCurrentPositions(stackDeque &s)
 	}
 }
 
+static size_t getLowerPosition(stackDeque s)
+{
+	size_t	min = INT_MAX;
+
+	for (stackDeque::iterator it = s.begin(); it != s.end(); it++)
+	{
+		if (it->index < min)
+			min = it->index;
+	}
+	return min;
+}
+
 // ---> Constructor and destructor ----------------------------------------------
 
 PushSwap::PushSwap(int ac, char **av)
@@ -156,23 +168,7 @@ void PushSwap::_setStackIndex()
 	}
 }
 
-// ---> Private Moves -----------------------------------------------------------
-
-void	PushSwap::_sortSmall()
-{
-	if (isSorted(this->_stackA))
-		return;
-
-	size_t maxID = getMaxID(this->_stackA);
-
-	if (this->_stackA[0].index == maxID)
-		this->_ra(true);
-	else if (this->_stackA[1].index == maxID)
-		this->_rra(true);
-	
-	if (this->_stackA[0].index > this->_stackA[1].index)
-		this->_sa(true);
-}
+// ---> Sort Big auxiliars -----------------------------------------------------------
 
 void	PushSwap::_sortBig()
 {
@@ -180,9 +176,13 @@ void	PushSwap::_sortBig()
 
 	while (this->_stackB.size() > 0)
 	{
-		this->_calcWhereItFitInA();
+		this->_WhereItFitInA();
+		this->_calculateMoves();
+
 		this->_stackB.pop_back();
 	}
+	if (!isSorted(this->_stackA))
+		this->_lastSort();
 }
 
 void	PushSwap::_pushAllSave3()
@@ -207,7 +207,7 @@ void	PushSwap::_pushAllSave3()
 	this->_sortSmall();
 }
 
-void	PushSwap::_calcWhereItFitInA()
+void	PushSwap::_WhereItFitInA()
 {
 	getCurrentPositions(this->_stackA);
 	getCurrentPositions(this->_stackB);
@@ -232,6 +232,57 @@ int		PushSwap::_getTargetPosition(size_t index)
 		}
 	}
 	return position;
+}
+
+void	PushSwap::_calculateMoves()
+{
+	int sizeA = this->_stackA.size();
+	int sizeB = this->_stackB.size();
+
+	for (stackDeque::iterator it = this->_stackB.begin(); it != this->_stackB.end(); it++)
+	{
+		it->movesInB = it->pos;
+		if (it->pos > sizeB / 2)
+			it->movesInB = (sizeB - it->pos) * -1;
+		it->movesInA = it->whereFit;
+		if (it->whereFit > sizeA / 2)
+			it->movesInA = (sizeA - it->whereFit) * -1;
+	}
+}
+
+void	PushSwap::_lastSort()
+{
+	size_t size = this->_stackA.size();
+	size_t position = getLowerPosition(this->_stackA);
+
+	if (position > size / 2)
+	{
+		while (position++ < size)
+			this->_rra(true);
+	}
+	else
+	{
+		while (position--)
+			this->_ra(true);
+	}
+}
+
+// ---> Common Moves auxiliars -----------------------------------------------------------
+
+void	PushSwap::_sortSmall()
+{
+	if (isSorted(this->_stackA))
+		return;
+
+	size_t maxID = getMaxID(this->_stackA);
+
+	if (this->_stackA[0].index == maxID)
+		this->_ra(true);
+	else if (this->_stackA[1].index == maxID)
+		this->_rra(true);
+	
+	if (this->_stackA[0].index > this->_stackA[1].index)
+		this->_sa(true);
 }
 
 void	PushSwap::_sa(bool print)

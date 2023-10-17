@@ -29,8 +29,11 @@ class PushSwap
 		// sort Big Moves auxiliars
 		void	_sortBig();
 		void	_pushAllSave3();
-		void	_calcWhereItFitInA();
+		void	_WhereItFitInA();
 		int		_getTargetPosition(size_t index);
+		void	_calculateMoves();
+
+		void	_lastSort();
 
 		// Moves
 		void _sortSmall();
