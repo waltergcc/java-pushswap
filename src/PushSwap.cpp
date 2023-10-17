@@ -14,7 +14,7 @@ static bool isValidNumber(std::string s)
 	return true;
 }
 
-static bool hasDuplicate(stackVector stack, int number)
+static bool hasDuplicate(stackDeque stack, int number)
 {
 	for (size_t i = 0; i < stack.size(); i++)
 	{
@@ -24,9 +24,9 @@ static bool hasDuplicate(stackVector stack, int number)
 	return false;
 }
 
-static bool isSorted(stackVector s)
+static bool isSorted(stackDeque s)
 {
-	for (stackVector::iterator it = s.begin(); it != s.end() - 1; it++)
+	for (stackDeque::iterator it = s.begin(); it != s.end() - 1; it++)
 	{
 		if (it->number > (it + 1)->number)
 			return false;
@@ -59,7 +59,7 @@ void PushSwap::run()
 
 void PushSwap::print()
 {
-	for (stackVector::iterator it = this->_stackA.begin(); it != this->_stackA.end(); it++)
+	for (stackDeque::iterator it = this->_stackA.begin(); it != this->_stackA.end(); it++)
 	{
 		std::cout << it->number << " ";
 	}
@@ -113,8 +113,8 @@ void PushSwap::_setStackIndex()
 
 	for (size_t i = this->_stackA.size(); i > 0; i--)
 	{
-		stackVector::iterator	tmp;
-		stackVector::iterator	it;
+		stackDeque::iterator	tmp;
+		stackDeque::iterator	it;
 		int	max = INT_MIN;
 		for (it = this->_stackA.begin(); it != this->_stackA.end(); it++)
 		{
@@ -158,12 +158,9 @@ void	PushSwap::_ra()
 {
 	info	tmp;
 
-	tmp = this->_stackA[0];
-	for (size_t i = 0; i < this->_stackA.size() - 1; i++)
-	{
-		this->_stackA[i] = this->_stackA[i + 1];
-	}
-	this->_stackA[this->_stackA.size() - 1] = tmp;
+	tmp = this->_stackA.front();
+	this->_stackA.pop_front();
+	this->_stackA.push_back(tmp);
 
 	std::cout << "ra" << std::endl;
 }
@@ -172,12 +169,9 @@ void	PushSwap::_rra()
 {
 	info	tmp;
 
-	tmp = this->_stackA[this->_stackA.size() - 1];
-	for (size_t i = this->_stackA.size() - 1; i > 0; i--)
-	{
-		this->_stackA[i] = this->_stackA[i - 1];
-	}
-	this->_stackA[0] = tmp;
+	tmp = this->_stackA.back();
+	this->_stackA.pop_back();
+	this->_stackA.push_front(tmp);
 
 	std::cout << "rra" << std::endl;
 }

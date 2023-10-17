@@ -12,13 +12,13 @@ struct info
 	int		movesInB;
 };
 
-typedef std::vector<info> stackVector;
+typedef std::deque<info> stackDeque;
 
 class PushSwap
 {
 	private:
-		stackVector	_stackA;
-		stackVector	_stackB;
+		stackDeque	_stackA;
+		stackDeque	_stackB;
 		size_t		_maxID;
 
 		// Constructor auxiliars

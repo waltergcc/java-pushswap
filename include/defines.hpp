@@ -5,8 +5,7 @@
 #include <exception>
 #include <stdexcept>
 #include <vector>
+#include <deque>
 #include <climits>
 #include <cstdlib>
 #include <algorithm>
-
-typedef std::vector<int> intVector;
