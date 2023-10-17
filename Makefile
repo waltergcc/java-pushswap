@@ -2,32 +2,16 @@ PROGRAM = Main
 
 JAVAC = javac
 JAVA = java
-JAR = jar
-BINDIR = bin
-SRC = src/Main.java
+CLASSPATH = src
 RM = rm -rf
-MANIFEST = manifest.txt
 
-.SUFFIXES: .java .class
-
-.java.class:
-	$(JAVAC) -d $(BINDIR) $<
-
-all: $(SRC:.java=.class)
+all:
+	$(JAVAC) src/Main.java src/PushSwap.java src/Info.java
 
 run: all
-	$(JAVA) -cp $(BINDIR) $(PROGRAM)
+	$(JAVA) -cp $(CLASSPATH) $(PROGRAM)
 
 clean:
-	$(RM) $(BINDIR)
+	$(RM) $(CLASSPATH)/*.class
 
-fclean: clean
-	$(RM) $(PROGRAM).jar
-
-$(MANIFEST):
-	echo "Main-Class: $(PROGRAM)" > $@
-
-jar: $(MANIFEST)
-	$(JAR) cvf $(PROGRAM).jar $(MANIFEST) -C $(BINDIR) .
-
-.PHONY: all clean run jar
+.PHONY: all clean run

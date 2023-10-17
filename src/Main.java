@@ -8,10 +8,7 @@ public class Main
 	{
 		try
 		{
-			System.out.println("Hello World");
-			// PushSwap pushswap = new PushSwap(args);
-			// pushswap.run();
-			// pushswap.print();
+			PushSwap pushswap = new PushSwap(args);
 		}
 		catch (Exception e)
 		{
