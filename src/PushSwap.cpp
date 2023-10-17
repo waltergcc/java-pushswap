@@ -48,15 +48,24 @@ PushSwap::~PushSwap(){}
 
 void PushSwap::run()
 {
-	if (isSorted(this->_stackA))
-		std::cout << "Already sorted" << std::endl;
-	else
-	{
-		std::cout << "Not sorted" << std::endl;
-	}
+	size_t size = this->_stackA.size();
+
+	if (size == 2 && !isSorted(this->_stackA))
+		this->_sa();
+
+		
 }
 
-// ---> Private constructor auxiliars ------------------------------------------
+void PushSwap::print()
+{
+	for (stackVector::iterator it = this->_stackA.begin(); it != this->_stackA.end(); it++)
+	{
+		std::cout << it->number << " ";
+	}
+	std::cout << std::endl;
+}
+
+// ---> Private Cnstructor auxiliars ------------------------------------------
 
 void PushSwap::_checkInput(int ac, char **av)
 {
@@ -114,4 +123,15 @@ void PushSwap::_setStackIndex()
 		}
 		tmp->index = i;
 	}
+}
+
+// ---> Private Moves -----------------------------------------------------------
+
+void	PushSwap::_sa()
+{
+	info	tmp;
+
+	tmp = this->_stackA[0];
+	this->_stackA[0] = this->_stackA[1];
+	this->_stackA[1] = tmp;
 }
