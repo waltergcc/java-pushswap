@@ -6,9 +6,30 @@ import java.lang.Exception;
 
 public class PushSwap
 {
+	private Deque<Info> stackA;
+	private Deque<Info> stackB;
+
 	public PushSwap(String[] args) throws Exception
 	{
-		this.checkInput(args);
+		stackA = new ArrayDeque<Info>();
+		stackB = new ArrayDeque<Info>();
+
+		checkInput(args);
+	}
+
+	public void print()
+	{
+		Iterator<Info> it = stackA.iterator();
+		while (it.hasNext())
+		{
+			System.out.print(it.next().number + " ");
+		}
+		System.out.println();
+		Iterator<Info> it2 = stackB.iterator();
+		while (it2.hasNext())
+		{
+			System.out.print(it2.next().number + " ");
+		}
 	}
 
 	private void checkInput(String[] args) throws Exception
@@ -20,14 +41,20 @@ public class PushSwap
 		
 		for (int i = 0; i < args.length; i++)
 		{
-			System.out.println("args[" + i + "]: " + args[i]);
 			if (!isValidNumber(args[i]))
 				throw new Exception("Error: invalid argument");
 
 			number = Double.parseDouble(args[i]);
 			if (number > Integer.MAX_VALUE || number < Integer.MIN_VALUE)
 				throw new Exception("Error: argument out of range");
+			
+			if (hasDuplicates((int)number))
+				throw new Exception("Error: duplicate argument");
+			
+			stackA.addLast(new Info((int)number));
 		}
+		if (stackA.size() == 1)
+			throw new Exception("Error: Not enough arguments");
 	}
 
 	private boolean isValidNumber(String s)
@@ -41,4 +68,17 @@ public class PushSwap
 		}
 		return true;
 	}
+
+	private boolean hasDuplicates(int number)
+	{
+		Iterator<Info> it = stackA.iterator();
+		while (it.hasNext())
+		{
+			if (it.next().number == number)
+				return true;
+		}
+		return false;
+	}
+
+
 }

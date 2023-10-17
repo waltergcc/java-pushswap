@@ -7,13 +7,13 @@ public class Info
 	public int movesInA;
 	public int movesInB;
 
-	public Info(int number, int index, int pos, int whereFit, int movesInA, int movesInB)
+	public Info(int number)
 	{
 		this.number = number;
-		this.index = index;
-		this.pos = pos;
-		this.whereFit = whereFit;
-		this.movesInA = movesInA;
-		this.movesInB = movesInB;
+		this.index = 0;
+		this.pos = -1;
+		this.whereFit = -1;
+		this.movesInA = -1;
+		this.movesInB = -1;
 	}
 }
