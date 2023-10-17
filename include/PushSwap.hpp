@@ -28,4 +28,6 @@ class PushSwap
 	public:
 		PushSwap(int ac, char **av);
 		~PushSwap();
+
+		void run();
 };

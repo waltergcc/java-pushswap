@@ -1,6 +1,7 @@
 #include "PushSwap.hpp"
 
 // ---> Static functions -------------------------------------------------------
+
 static bool isValidNumber(std::string s)
 {
 	for (size_t i = 0; i < s.length(); i++)
@@ -23,6 +24,16 @@ static bool hasDuplicate(stackVector stack, int number)
 	return false;
 }
 
+static bool isSorted(stackVector s)
+{
+	for (stackVector::iterator it = s.begin(); it != s.end() - 1; it++)
+	{
+		if (it->number > (it + 1)->number)
+			return false;
+	}
+	return true;
+}
+
 // ---> Constructor and destructor ----------------------------------------------
 
 PushSwap::PushSwap(int ac, char **av)
@@ -32,6 +43,18 @@ PushSwap::PushSwap(int ac, char **av)
 }
 
 PushSwap::~PushSwap(){}
+
+// ---> public member functions -------------------------------------------------
+
+void PushSwap::run()
+{
+	if (isSorted(this->_stackA))
+		std::cout << "Already sorted" << std::endl;
+	else
+	{
+		std::cout << "Not sorted" << std::endl;
+	}
+}
 
 // ---> Private constructor auxiliars ------------------------------------------
 
