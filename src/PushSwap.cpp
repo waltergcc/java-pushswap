@@ -28,7 +28,7 @@ static bool hasDuplicate(stackVector stack, int number)
 PushSwap::PushSwap(int ac, char **av)
 {
 	this->_checkInput(ac, av);
-	this->_getMainIndex();
+	this->_setStackIndex();
 }
 
 PushSwap::~PushSwap(){}
@@ -74,7 +74,7 @@ void PushSwap::_addNumber(int number)
 	this->_stackA.push_back(tmp);
 }
 
-void PushSwap::_getMainIndex()
+void PushSwap::_setStackIndex()
 {
 	for (size_t i = this->_stackA.size(); i > 0; i--)
 	{

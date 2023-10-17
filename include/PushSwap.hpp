@@ -21,7 +21,7 @@ class PushSwap
 
 		void _checkInput(int ac, char **av);
 		void _addNumber(int number);
-		void _getMainIndex();
+		void _setStackIndex();
 
 		PushSwap();
 
