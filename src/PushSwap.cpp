@@ -48,12 +48,13 @@ PushSwap::~PushSwap(){}
 
 void PushSwap::run()
 {
-	size_t size = this->_stackA.size();
+	if (isSorted(this->_stackA))
+		throw std::runtime_error("List is already sorted");
 
-	if (size == 2 && !isSorted(this->_stackA))
+	if (this->_stackA.size() == 2)
 		this->_sa();
-
-		
+ 	else if (this->_stackA.size() == 3)
+		this->_sortSmall();
 }
 
 void PushSwap::print()
@@ -108,6 +109,8 @@ void PushSwap::_addNumber(int number)
 
 void PushSwap::_setStackIndex()
 {
+	this->_maxID = 0;
+
 	for (size_t i = this->_stackA.size(); i > 0; i--)
 	{
 		stackVector::iterator	tmp;
@@ -122,10 +125,23 @@ void PushSwap::_setStackIndex()
 			}
 		}
 		tmp->index = i;
+		if (tmp->index > this->_maxID)
+			this->_maxID = tmp->index;
 	}
 }
 
 // ---> Private Moves -----------------------------------------------------------
+
+void	PushSwap::_sortSmall()
+{
+	if (this->_stackA[0].index == this->_maxID)
+		this->_ra();
+	else if (this->_stackA[1].index == this->_maxID)
+		this->_rra();
+	
+	if (this->_stackA[0].index > this->_stackA[1].index)
+		this->_sa();
+}
 
 void	PushSwap::_sa()
 {
@@ -134,4 +150,34 @@ void	PushSwap::_sa()
 	tmp = this->_stackA[0];
 	this->_stackA[0] = this->_stackA[1];
 	this->_stackA[1] = tmp;
+
+	std::cout << "sa" << std::endl;
+}
+
+void	PushSwap::_ra()
+{
+	info	tmp;
+
+	tmp = this->_stackA[0];
+	for (size_t i = 0; i < this->_stackA.size() - 1; i++)
+	{
+		this->_stackA[i] = this->_stackA[i + 1];
+	}
+	this->_stackA[this->_stackA.size() - 1] = tmp;
+
+	std::cout << "ra" << std::endl;
+}
+
+void	PushSwap::_rra()
+{
+	info	tmp;
+
+	tmp = this->_stackA[this->_stackA.size() - 1];
+	for (size_t i = this->_stackA.size() - 1; i > 0; i--)
+	{
+		this->_stackA[i] = this->_stackA[i - 1];
+	}
+	this->_stackA[0] = tmp;
+
+	std::cout << "rra" << std::endl;
 }

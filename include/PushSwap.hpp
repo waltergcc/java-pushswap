@@ -19,6 +19,7 @@ class PushSwap
 	private:
 		stackVector	_stackA;
 		stackVector	_stackB;
+		size_t		_maxID;
 
 		// Constructor auxiliars
 		void _checkInput(int ac, char **av);
@@ -26,15 +27,16 @@ class PushSwap
 		void _setStackIndex();
 
 		// Moves
+		void _sortSmall();
 		void _sa();
+		void _ra();
+		void _rra();
 		// void _sb();
 		// void _ss();
 		// void _pa();
 		// void _pb();
-		// void _ra();
 		// void _rb();
 		// void _rr();
-		// void _rra();
 		// void _rrb();
 		// void _rrr();
 
