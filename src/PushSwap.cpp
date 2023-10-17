@@ -34,6 +34,18 @@ static bool isSorted(stackDeque s)
 	return true;
 }
 
+static size_t getMaxID(stackDeque s)
+{
+	size_t	max = 0;
+
+	for (stackDeque::iterator it = s.begin(); it != s.end(); it++)
+	{
+		if (it->index > max)
+			max = it->index;
+	}
+	return max;
+}
+
 // ---> Constructor and destructor ----------------------------------------------
 
 PushSwap::PushSwap(int ac, char **av)
@@ -55,14 +67,24 @@ void PushSwap::run()
 		this->_sa(true);
  	else if (this->_stackA.size() == 3)
 		this->_sortSmall();
+	else
+		this->_sortBig();
 }
 
 void PushSwap::print()
 {
+	std::cout << "Stack A: ";
 	for (stackDeque::iterator it = this->_stackA.begin(); it != this->_stackA.end(); it++)
 	{
 		std::cout << it->number << " ";
 	}
+	std::cout << std::endl;
+	std::cout << "Stack B: ";
+	for (stackDeque::iterator it = this->_stackB.begin(); it != this->_stackB.end(); it++)
+	{
+		std::cout << it->number << " ";
+	}
+
 	std::cout << std::endl;
 }
 
@@ -109,8 +131,6 @@ void PushSwap::_addNumber(int number)
 
 void PushSwap::_setStackIndex()
 {
-	this->_maxID = 0;
-
 	for (size_t i = this->_stackA.size(); i > 0; i--)
 	{
 		stackDeque::iterator	tmp;
@@ -125,8 +145,6 @@ void PushSwap::_setStackIndex()
 			}
 		}
 		tmp->index = i;
-		if (tmp->index > this->_maxID)
-			this->_maxID = tmp->index;
 	}
 }
 
@@ -134,13 +152,45 @@ void PushSwap::_setStackIndex()
 
 void	PushSwap::_sortSmall()
 {
-	if (this->_stackA[0].index == this->_maxID)
+	if (isSorted(this->_stackA))
+		return;
+
+	size_t maxID = getMaxID(this->_stackA);
+
+	if (this->_stackA[0].index == maxID)
 		this->_ra(true);
-	else if (this->_stackA[1].index == this->_maxID)
+	else if (this->_stackA[1].index == maxID)
 		this->_rra(true);
 	
 	if (this->_stackA[0].index > this->_stackA[1].index)
 		this->_sa(true);
+}
+
+void	PushSwap::_sortBig()
+{
+	this->_pushAllSave3();
+}
+
+void	PushSwap::_pushAllSave3()
+{
+	size_t	size = this->_stackA.size();
+	size_t	moves = 0;
+
+	for (size_t i = 0; size > 6 && i < size && moves < size / 2; i++)
+	{
+		if (this->_stackA.front().index <= size / 2)
+		{
+			this->_pb();
+			moves++;
+		}
+		else
+			this->_ra(true);
+	}
+
+	for (; size - moves > 3; moves++)
+		this->_pb();
+	
+	this->_sortSmall();
 }
 
 void	PushSwap::_sa(bool print)
@@ -240,9 +290,9 @@ void	PushSwap::_pa()
 {
 	info	tmp;
 
-	tmp = this->_stackA.front();
-	this->_stackA.pop_front();
-	this->_stackB.push_front(tmp);
+	tmp = this->_stackB.front();
+	this->_stackB.pop_front();
+	this->_stackA.push_front(tmp);
 
 	std::cout << "pa" << std::endl;
 }
@@ -251,9 +301,9 @@ void	PushSwap::_pb()
 {
 	info	tmp;
 
-	tmp = this->_stackB.front();
-	this->_stackB.pop_front();
-	this->_stackA.push_front(tmp);
+	tmp = this->_stackA.front();
+	this->_stackA.pop_front();
+	this->_stackB.push_front(tmp);
 
 	std::cout << "pb" << std::endl;
 }

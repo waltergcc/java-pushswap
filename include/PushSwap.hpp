@@ -26,6 +26,10 @@ class PushSwap
 		void _addNumber(int number);
 		void _setStackIndex();
 
+		// sort Big Moves auxiliars
+		void _sortBig();
+		void _pushAllSave3();
+
 		// Moves
 		void _sortSmall();
 		void _sa(bool print);
