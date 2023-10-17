@@ -52,7 +52,7 @@ void PushSwap::run()
 		throw std::runtime_error("List is already sorted");
 
 	if (this->_stackA.size() == 2)
-		this->_sa();
+		this->_sa(true);
  	else if (this->_stackA.size() == 3)
 		this->_sortSmall();
 }
@@ -135,15 +135,15 @@ void PushSwap::_setStackIndex()
 void	PushSwap::_sortSmall()
 {
 	if (this->_stackA[0].index == this->_maxID)
-		this->_ra();
+		this->_ra(true);
 	else if (this->_stackA[1].index == this->_maxID)
-		this->_rra();
+		this->_rra(true);
 	
 	if (this->_stackA[0].index > this->_stackA[1].index)
-		this->_sa();
+		this->_sa(true);
 }
 
-void	PushSwap::_sa()
+void	PushSwap::_sa(bool print)
 {
 	info	tmp;
 
@@ -151,10 +151,11 @@ void	PushSwap::_sa()
 	this->_stackA[0] = this->_stackA[1];
 	this->_stackA[1] = tmp;
 
-	std::cout << "sa" << std::endl;
+	if (print)
+		std::cout << "sa" << std::endl;
 }
 
-void	PushSwap::_ra()
+void	PushSwap::_ra(bool print)
 {
 	info	tmp;
 
@@ -162,10 +163,11 @@ void	PushSwap::_ra()
 	this->_stackA.pop_front();
 	this->_stackA.push_back(tmp);
 
-	std::cout << "ra" << std::endl;
+	if (print)
+		std::cout << "ra" << std::endl;
 }
 
-void	PushSwap::_rra()
+void	PushSwap::_rra(bool print)
 {
 	info	tmp;
 
@@ -173,5 +175,85 @@ void	PushSwap::_rra()
 	this->_stackA.pop_back();
 	this->_stackA.push_front(tmp);
 
-	std::cout << "rra" << std::endl;
+	if (print)
+		std::cout << "rra" << std::endl;
+}
+
+void	PushSwap::_sb(bool print)
+{
+	info	tmp;
+
+	tmp = this->_stackB[0];
+	this->_stackB[0] = this->_stackB[1];
+	this->_stackB[1] = tmp;
+
+	if (print)
+		std::cout << "sb" << std::endl;
+}
+
+void	PushSwap::_rb(bool print)
+{
+	info	tmp;
+
+	tmp = this->_stackB.front();
+	this->_stackB.pop_front();
+	this->_stackB.push_back(tmp);
+
+	if (print)
+		std::cout << "rb" << std::endl;
+}
+
+void	PushSwap::_rrb(bool print)
+{
+	info	tmp;
+
+	tmp = this->_stackB.back();
+	this->_stackB.pop_back();
+	this->_stackB.push_front(tmp);
+
+	if (print)
+		std::cout << "rrb" << std::endl;
+}
+
+void	PushSwap::_ss()
+{
+	this->_sa(false);
+	this->_sb(false);
+	std::cout << "ss" << std::endl;
+}
+
+void	PushSwap::_rr()
+{
+	this->_ra(false);
+	this->_rb(false);
+	std::cout << "rr" << std::endl;
+}
+
+void	PushSwap::_rrr()
+{
+	this->_rra(false);
+	this->_rrb(false);
+	std::cout << "rrr" << std::endl;
+}
+
+void	PushSwap::_pa()
+{
+	info	tmp;
+
+	tmp = this->_stackA.front();
+	this->_stackA.pop_front();
+	this->_stackB.push_front(tmp);
+
+	std::cout << "pa" << std::endl;
+}
+
+void	PushSwap::_pb()
+{
+	info	tmp;
+
+	tmp = this->_stackB.front();
+	this->_stackB.pop_front();
+	this->_stackA.push_front(tmp);
+
+	std::cout << "pb" << std::endl;
 }

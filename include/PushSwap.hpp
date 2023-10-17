@@ -28,17 +28,17 @@ class PushSwap
 
 		// Moves
 		void _sortSmall();
-		void _sa();
-		void _ra();
-		void _rra();
-		// void _sb();
-		// void _ss();
-		// void _pa();
-		// void _pb();
-		// void _rb();
-		// void _rr();
-		// void _rrb();
-		// void _rrr();
+		void _sa(bool print);
+		void _ra(bool print);
+		void _rra(bool print);
+		void _sb(bool print);
+		void _rb(bool print);
+		void _rrb(bool print);
+		void _ss();
+		void _rr();
+		void _rrr();
+		void _pa();
+		void _pb();
 
 		PushSwap();
 
