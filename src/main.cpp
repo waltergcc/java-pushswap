@@ -1,4 +1,4 @@
-#include "main.hpp"
+#include "PushSwap.hpp"
 
 int main(int ac, char **av)
 {

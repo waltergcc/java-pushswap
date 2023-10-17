@@ -86,7 +86,7 @@ PushSwap::~PushSwap(){}
 void PushSwap::run()
 {
 	if (isSorted(this->_stackA))
-		throw std::runtime_error("List is already sorted");
+		throw std::runtime_error(ALREADY_SORTED);
 
 	if (this->_stackA.size() == 2)
 		this->_sa(true);
@@ -118,24 +118,24 @@ void PushSwap::_checkInput(int ac, char **av)
 	double					number;
 
 	if (ac < 2)
-		throw std::runtime_error("Error: no arguments");
+		throw std::runtime_error(NO_ARGUMENTS);
 	
 	for (int i = 1; i < ac; i++)
 	{
 		if (!isValidNumber(av[i]))
-			throw std::runtime_error("Error: invalid argument" + std::string(av[i]));
+			throw std::runtime_error(INVALID_ARG(std::string(av[i])));
 
 		number = std::atof(av[i]);
 		if (number > INT_MAX || number < INT_MIN)
-			throw std::runtime_error("Error: argument out of range " + std::string(av[i]));
+			throw std::runtime_error(OVERFLOW(std::string(av[i])));
 		
 		if (hasDuplicate(this->_stackA, number))
-			throw std::runtime_error("Error: duplicate argument " + std::string(av[i]));
+			throw std::runtime_error(DUPLICATE_ARG(std::string(av[i])));
 		
 		this->_addNumber(number);
 	}
 	if (this->_stackA.size() < 2)
-		throw std::runtime_error("Error: not enough arguments");
+		throw std::runtime_error(NOT_ENOUGH_ARGS);
 }
 
 void PushSwap::_addNumber(int number)
