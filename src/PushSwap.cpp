@@ -56,14 +56,19 @@ static void getCurrentPositions(stackDeque &s)
 
 static size_t getLowerPosition(stackDeque s)
 {
-	size_t	min = INT_MAX;
+	size_t	minIndex = INT_MAX;
+	getCurrentPositions(s);
 
+	size_t lowPosistion = s.front().pos;
 	for (stackDeque::iterator it = s.begin(); it != s.end(); it++)
 	{
-		if (it->index < min)
-			min = it->index;
+		if (it->index < minIndex)
+		{
+			minIndex = it->index;
+			lowPosistion = it->pos;
+		}
 	}
-	return min;
+	return lowPosistion;
 }
 
 // ---> Constructor and destructor ----------------------------------------------
@@ -93,13 +98,11 @@ void PushSwap::run()
 
 void PushSwap::print()
 {
-	std::cout << "Stack A: ";
 	for (stackDeque::iterator it = this->_stackA.begin(); it != this->_stackA.end(); it++)
 	{
 		std::cout << it->number << " ";
 	}
 	std::cout << std::endl;
-	std::cout << "Stack B: ";
 	for (stackDeque::iterator it = this->_stackB.begin(); it != this->_stackB.end(); it++)
 	{
 		std::cout << it->number << " ";
@@ -174,12 +177,11 @@ void	PushSwap::_sortBig()
 {
 	this->_pushAllSave3();
 
-	while (this->_stackB.size() > 0)
+	while (!this->_stackB.empty())
 	{
 		this->_WhereItFitInA();
 		this->_calculateMoves();
-
-		this->_stackB.pop_back();
+		this->_doMoves();
 	}
 	if (!isSorted(this->_stackA))
 		this->_lastSort();
@@ -231,6 +233,17 @@ int		PushSwap::_getTargetPosition(size_t index)
 			position = it->pos;
 		}
 	}
+	if (max != INT_MAX)
+		return position;
+
+	for (stackDeque::iterator it = this->_stackA.begin(); it != this->_stackA.end(); it++)
+	{
+		if (it->index < max)
+		{
+			max = it->index;
+			position = it->pos;
+		}
+	}
 	return position;
 }
 
@@ -247,6 +260,92 @@ void	PushSwap::_calculateMoves()
 		it->movesInA = it->whereFit;
 		if (it->whereFit > sizeA / 2)
 			it->movesInA = (sizeA - it->whereFit) * -1;
+	}
+}
+
+void	PushSwap::_doMoves()
+{
+	size_t less = INT_MAX;
+	int		movesInA = 0;
+	int		movesInB = 0;
+
+	for (stackDeque::iterator it = this->_stackB.begin(); it != this->_stackB.end(); it++)
+	{
+		if (abs(it->movesInA) + abs(it->movesInB) < abs(less))
+		{
+			less = abs(it->movesInA) + abs(it->movesInB);
+			movesInA = it->movesInA;
+			movesInB = it->movesInB;
+		}
+	}
+
+	// std::cout << "-----------------------------------	" << std::endl;
+	if (movesInA < 0 && movesInB < 0)
+		this->_reverseBoth(movesInA, movesInB);
+	else if (movesInA > 0 && movesInB > 0)
+		this->_rotateBoth(movesInA, movesInB);
+	this->_rotateA(movesInA);
+	this->_rotateB(movesInB);
+	// std::cout << "outMA: " << movesInA << " outMB: " << movesInB << std::endl;
+
+	this->_pa();
+}
+
+void	PushSwap::_reverseBoth(int &movesInA, int &movesInB)
+{
+	// std::cout << "InRRR: " << movesInA << " " << movesInB << std::endl;
+	while (movesInA < 0 && movesInB < 0)
+	{
+		movesInA++;
+		movesInB++;
+		this->_rrr();
+	}
+}
+
+void	PushSwap::_rotateBoth(int &movesInA, int &movesInB)
+{
+	// std::cout << "InRR: " << movesInA << " " << movesInB << std::endl;
+	while (movesInA > 0 && movesInB > 0)
+	{
+		movesInA--;
+		movesInB--;
+		this->_rr();
+	}
+}
+
+void	PushSwap::_rotateA(int &movesInA)
+{
+	// std::cout << "InRA: " << movesInA << std::endl;
+	while (movesInA)
+	{
+		if (movesInA > 0)
+		{
+			movesInA--;
+			this->_ra(true);
+		}
+		else if (movesInA < 0)
+		{
+			movesInA++;
+			this->_rra(true);
+		}
+	}
+}
+
+void	PushSwap::_rotateB(int &movesInB)
+{
+	// std::cout << "InRB: " << movesInB << std::endl;
+	while (movesInB > 0)
+	{
+		if (movesInB > 0)
+		{
+			movesInB--;
+			this->_rb(true);
+		}
+		else if (movesInB < 0)
+		{
+			movesInB++;
+			this->_rrb(true);
+		}
 	}
 }
 
@@ -352,7 +451,7 @@ void	PushSwap::_rrb(bool print)
 	tmp = this->_stackB.back();
 	this->_stackB.pop_back();
 	this->_stackB.push_front(tmp);
-
+	
 	if (print)
 		std::cout << "rrb" << std::endl;
 }

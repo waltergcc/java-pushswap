@@ -19,7 +19,6 @@ class PushSwap
 	private:
 		stackDeque	_stackA;
 		stackDeque	_stackB;
-		size_t		_maxID;
 
 		// Constructor auxiliars
 		void _checkInput(int ac, char **av);
@@ -32,7 +31,11 @@ class PushSwap
 		void	_WhereItFitInA();
 		int		_getTargetPosition(size_t index);
 		void	_calculateMoves();
-
+		void	_doMoves();
+		void	_rotateBoth(int &movesInA, int &movesInB);
+		void	_reverseBoth(int &movesInA, int &movesInB);
+		void	_rotateA(int &movesInA);
+		void	_rotateB(int &movesInB);
 		void	_lastSort();
 
 		// Moves
