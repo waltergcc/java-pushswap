@@ -1,10 +1,11 @@
 import java.util.*;
 import java.lang.*;
 import java.io.*;
+import java.lang.Exception;
 
 public class Main
 {
-	public static void main (String[] args) throws java.lang.Exception
+	public static void main (String[] args) throws Exception
 	{
 		try
 		{
@@ -12,7 +13,7 @@ public class Main
 		}
 		catch (Exception e)
 		{
-			System.out.println(e);
+			System.out.println(e.getMessage());
 			System.exit(1);
 		}
 	}
