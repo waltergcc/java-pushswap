@@ -26,7 +26,6 @@ PushSwap::~PushSwap(){}
 
 void PushSwap::_checkInput(int ac, char **av)
 {
-	intVector	numbers;
 	intVector::iterator	it;
 	double		tmp;
 
@@ -42,12 +41,12 @@ void PushSwap::_checkInput(int ac, char **av)
 		if (tmp > INT_MAX || tmp < INT_MIN)
 			throw std::runtime_error("Error: argument out of range " + std::string(av[i]));
 		
-		it = std::find(numbers.begin(), numbers.end(), tmp);
-		if (it != numbers.end())
+		it = std::find(this->_numbers.begin(), this->_numbers.end(), tmp);
+		if (it != this->_numbers.end())
 			throw std::runtime_error("Error: duplicate argument " + std::string(av[i]));
 
-		numbers.push_back(tmp);
+		this->_numbers.push_back(tmp);
 	}
-	if (numbers.size() < 2)
+	if (this->_numbers.size() < 2)
 		throw std::runtime_error("Error: not enough arguments");
 }

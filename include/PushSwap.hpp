@@ -5,8 +5,10 @@
 class PushSwap
 {
 	private:
-
+		intVector	_numbers;
+		
 		void _checkInput(int ac, char **av);
+
 		PushSwap();
 
 	public:
