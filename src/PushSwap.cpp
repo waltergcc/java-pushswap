@@ -46,6 +46,14 @@ static size_t getMaxID(stackDeque s)
 	return max;
 }
 
+static void getCurrentPositions(stackDeque &s)
+{
+	for (size_t i = 0; i < s.size(); i++)
+	{
+		s[i].pos = i;
+	}
+}
+
 // ---> Constructor and destructor ----------------------------------------------
 
 PushSwap::PushSwap(int ac, char **av)
@@ -169,6 +177,12 @@ void	PushSwap::_sortSmall()
 void	PushSwap::_sortBig()
 {
 	this->_pushAllSave3();
+
+	while (this->_stackB.size() > 0)
+	{
+		this->_calcWhereItFitInA();
+		this->_stackB.pop_back();
+	}
 }
 
 void	PushSwap::_pushAllSave3()
@@ -191,6 +205,33 @@ void	PushSwap::_pushAllSave3()
 		this->_pb();
 	
 	this->_sortSmall();
+}
+
+void	PushSwap::_calcWhereItFitInA()
+{
+	getCurrentPositions(this->_stackA);
+	getCurrentPositions(this->_stackB);
+
+	for (stackDeque::iterator it = this->_stackB.begin(); it != this->_stackB.end(); it++)
+	{
+		it->whereFit = this->_getTargetPosition(it->index);
+	}
+}
+
+int		PushSwap::_getTargetPosition(size_t index)
+{
+	size_t max = INT_MAX;
+	int position = -1;
+
+	for (stackDeque::iterator it = this->_stackA.begin(); it != this->_stackA.end(); it++)
+	{
+		if (it->index > index && it->index < max)
+		{
+			max = it->index;
+			position = it->pos;
+		}
+	}
+	return position;
 }
 
 void	PushSwap::_sa(bool print)
