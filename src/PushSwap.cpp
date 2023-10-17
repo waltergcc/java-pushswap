@@ -13,6 +13,16 @@ static bool isValidNumber(std::string s)
 	return true;
 }
 
+static bool hasDuplicate(stackVector stack, int number)
+{
+	for (size_t i = 0; i < stack.size(); i++)
+	{
+		if (stack[i].number == number)
+			return true;
+	}
+	return false;
+}
+
 // ---> Constructor and destructor ----------------------------------------------
 
 PushSwap::PushSwap(int ac, char **av)
@@ -26,8 +36,7 @@ PushSwap::~PushSwap(){}
 
 void PushSwap::_checkInput(int ac, char **av)
 {
-	intVector::iterator	it;
-	double		tmp;
+	double					number;
 
 	if (ac < 2)
 		throw std::runtime_error("Error: no arguments");
@@ -37,16 +46,29 @@ void PushSwap::_checkInput(int ac, char **av)
 		if (!isValidNumber(av[i]))
 			throw std::runtime_error("Error: invalid argument" + std::string(av[i]));
 
-		tmp = std::atof(av[i]);
-		if (tmp > INT_MAX || tmp < INT_MIN)
+		number = std::atof(av[i]);
+		if (number > INT_MAX || number < INT_MIN)
 			throw std::runtime_error("Error: argument out of range " + std::string(av[i]));
 		
-		it = std::find(this->_numbers.begin(), this->_numbers.end(), tmp);
-		if (it != this->_numbers.end())
+		if (hasDuplicate(this->_stackA, number))
 			throw std::runtime_error("Error: duplicate argument " + std::string(av[i]));
-
-		this->_numbers.push_back(tmp);
+		
+		this->_addNumber(number);
 	}
-	if (this->_numbers.size() < 2)
+	if (this->_stackA.size() < 2)
 		throw std::runtime_error("Error: not enough arguments");
+}
+
+void PushSwap::_addNumber(int number)
+{
+	info	tmp;
+
+	tmp.number = number;
+	tmp.index = 0;
+	tmp.pos = -1;
+	tmp.whereFit = -1;
+	tmp.movesInA = -1;
+	tmp.movesInB = -1;
+
+	this->_stackA.push_back(tmp);
 }

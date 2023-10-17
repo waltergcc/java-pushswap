@@ -2,12 +2,25 @@
 
 #include "defines.hpp"
 
+struct info
+{
+	int		number;
+	size_t	index;
+	int		pos;
+	int		whereFit;
+	int		movesInA;
+	int		movesInB;
+};
+
+typedef std::vector<info> stackVector;
+
 class PushSwap
 {
 	private:
-		intVector	_numbers;
-		
+		stackVector	_stackA;
+
 		void _checkInput(int ac, char **av);
+		void _addNumber(int number);
 
 		PushSwap();
 
