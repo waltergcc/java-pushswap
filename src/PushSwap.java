@@ -24,20 +24,26 @@ public class PushSwap
 
 	// ---> Public methods -----------------------------------------------------
 
+	public void run() throws Exception
+	{
+		if (isSorted())
+			throw new Exception("List is already sorted");
+	}
+
 	public void print()
 	{
 		Iterator<Info> it = stackA.iterator();
 		while (it.hasNext())
 		{
 			Info node = it.next();
-			System.out.println(node.number + " | " + node.index);
+			System.out.print(node.number + " ");
 		}
 		System.out.println();
 		Iterator<Info> it2 = stackB.iterator();
 		while (it2.hasNext())
 		{
 			Info node = it2.next();
-			System.out.print(node.number + " | " + node.index + ", ");
+			System.out.print(node.number + " ");
 		}
 	}
 
@@ -109,5 +115,21 @@ public class PushSwap
 			}
 			tmp.setIndex(i);
 		}
+	}
+
+	// ---> Private Run Auxiliary methods --------------------------------------
+
+	private boolean isSorted()
+	{
+		Iterator<Info> it = stackA.descendingIterator();
+		int prev = Integer.MAX_VALUE;
+		while (it.hasNext())
+		{
+			Info node = it.next();
+			if (node.number > prev)
+				return false;
+			prev = node.number;
+		}
+		return true;
 	}
 }

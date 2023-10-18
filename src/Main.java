@@ -10,6 +10,7 @@ public class Main
 		try
 		{
 			PushSwap pushswap = new PushSwap(args);
+			pushswap.run();
 			pushswap.print();
 		}
 		catch (Exception e)
