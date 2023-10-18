@@ -266,7 +266,7 @@ public class PushSwap
 			}
 		}
 
-		if (target != Integer.MAX_VALUE)
+		if (max != Integer.MAX_VALUE)
 			return target;
 		
 		it = stackA.iterator();
@@ -316,16 +316,16 @@ public class PushSwap
 				tmpMovesInA = node.movesInA;
 				tmpMovesInB = node.movesInB;
 			}
-
-			if (tmpMovesInA < 0 && tmpMovesInB < 0)
-				reverseBoth();
-			else if (tmpMovesInA > 0 && tmpMovesInB > 0)
-				rotateBoth();
-			rotateA();
-			rotateB();
-
-			pa();
 		}
+
+		if (tmpMovesInA < 0 && tmpMovesInB < 0)
+			reverseBoth();
+		else if (tmpMovesInA > 0 && tmpMovesInB > 0)
+			rotateBoth();
+		rotateA();
+		rotateB();
+
+		pa();
 	}
 
 	private void reverseBoth()
@@ -350,6 +350,9 @@ public class PushSwap
 
 	private void rotateA()
 	{
+		if (tmpMovesInA == 0)
+			return;
+
 		while (tmpMovesInA != 0)
 		{
 			if (tmpMovesInA > 0)
@@ -367,6 +370,9 @@ public class PushSwap
 
 	private void rotateB()
 	{
+		if (tmpMovesInB == 0)
+			return;
+		
 		while (tmpMovesInB != 0)
 		{
 			if (tmpMovesInB > 0)
@@ -389,7 +395,7 @@ public class PushSwap
 
 		if (position > size / 2)
 		{
-			while (position++ > size / 2)
+			while (position++ < size)
 				rra(true);
 		}
 		else
