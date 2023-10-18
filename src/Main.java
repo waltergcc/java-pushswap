@@ -8,7 +8,7 @@ public class Main
 		{
 			PushSwap pushswap = new PushSwap(args);
 			pushswap.run();
-			pushswap.print();
+			pushswap.printList(true);
 		}
 		catch (Exception e)
 		{

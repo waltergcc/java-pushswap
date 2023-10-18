@@ -124,7 +124,6 @@ void PushSwap::run()
 	
 	std::cout << std::endl << "Total moves	: " << this->_countMoves << std::endl;
 	std::cout << "Expended time	: " << time << " milliseconds" << std::endl;
-	
 	pressEnter();	
 }
 

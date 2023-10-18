@@ -2,6 +2,7 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
 import java.lang.Exception;
+import java.util.Scanner;
 
 public class PushSwap
 {
@@ -11,6 +12,7 @@ public class PushSwap
 	private Deque<Info> stackB;
 	private int			tmpMovesInA;
 	private int			tmpMovesInB;
+	private int			countMoves;
 
 	// ---> Constructor --------------------------------------------------------
 
@@ -30,16 +32,33 @@ public class PushSwap
 		if (isSorted())
 			throw new Exception("List is already sorted");
 		
+		printList(false);
+
+		printTitle();
+		System.out.println("Moves:\n");
+
+		countMoves = 0;
+
 		if (stackA.size() == 2)
 			sa(true);
 		else if (stackA.size() == 3)
 			sortSmall();
 		else
 			sortBig();
+		
+		System.out.println("\nTotal moves: " + countMoves);
+		pressEnter();
 	}
 
-	public void print()
+	public void printList(boolean sorted)
 	{
+		printTitle();
+
+		if (sorted == true)
+			System.out.println("Sorted list:\n");
+		else
+			System.out.println("Input list:\n");
+		
 		Iterator<Info> it = stackA.iterator();
 		while (it.hasNext())
 		{
@@ -47,13 +66,7 @@ public class PushSwap
 			System.out.print(node.number + " ");
 		}
 		System.out.println();
-		Iterator<Info> it2 = stackB.iterator();
-		while (it2.hasNext())
-		{
-			Info node = it2.next();
-			System.out.print(node.number + " ");
-		}
-		System.out.println();
+		pressEnter();
 	}
 
 	// ---> Private Constructor Auxiliary methods ------------------------------
@@ -124,6 +137,26 @@ public class PushSwap
 			}
 			tmp.setIndex(i);
 		}
+	}
+
+	// ---> Private print Auxiliary methods -------------------------------
+
+	private void printTitle()
+	{
+		System.out.print("\033c");
+		System.out.println("*********************************");
+		System.out.println("*        JAVA PUSH SWAP         *");
+		System.out.println("*********************************");
+		System.out.println();
+	}
+
+	private void pressEnter()
+	{
+		System.out.println("\nPress ENTER to continue");
+		Scanner in = new Scanner(System.in);
+		in.nextLine();
+		in.close();
+		System.out.println("\033c");
 	}
 
 	// ---> Private Run Auxiliary methods --------------------------------------
@@ -449,7 +482,10 @@ public class PushSwap
 		stackA.push(second);
 
 		if (print)
+		{
 			System.out.println("sa");
+			countMoves++;
+		}
 	}
 
 	private void ra(boolean print)
@@ -458,7 +494,10 @@ public class PushSwap
 		stackA.addLast(first);
 
 		if (print)
+		{
 			System.out.println("ra");
+			countMoves++;
+		}
 	}
 
 	private void rb(boolean print)
@@ -467,7 +506,10 @@ public class PushSwap
 		stackB.addLast(first);
 
 		if (print)
+		{
 			System.out.println("rb");
+			countMoves++;
+		}
 	}
 
 	private void rr()
@@ -475,6 +517,7 @@ public class PushSwap
 		ra(false);
 		rb(false);
 		System.out.println("rr");
+		countMoves++;
 	}
 
 	private void rra(boolean print)
@@ -483,7 +526,10 @@ public class PushSwap
 		stackA.push(last);
 
 		if (print)
+		{
 			System.out.println("rra");
+			countMoves++;
+		}
 	}
 
 	private void rrb(boolean print)
@@ -492,7 +538,10 @@ public class PushSwap
 		stackB.push(last);
 
 		if (print)
+		{
 			System.out.println("rrb");
+			countMoves++;
+		}
 	}
 
 	private void rrr()
@@ -500,6 +549,7 @@ public class PushSwap
 		rra(false);
 		rrb(false);
 		System.out.println("rrr");
+		countMoves++;
 	}
 
 	private void pa()
@@ -507,6 +557,7 @@ public class PushSwap
 		Info first = stackB.pop();
 		stackA.push(first);
 		System.out.println("pa");
+		countMoves++;
 	}
 
 	private void pb()
@@ -514,5 +565,6 @@ public class PushSwap
 		Info first = stackA.pop();
 		stackB.push(first);
 		System.out.println("pb");
+		countMoves++;
 	}
 }
