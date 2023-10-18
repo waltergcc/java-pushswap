@@ -32,4 +32,6 @@ clean:
 1250: all
 	$(JAVA) -cp $(CLASSPATH) $(PROGRAM) $(shell shuf -i 1-2000 -n 1250)
 
-.PHONY: all clean run 2 3 10 25 100 500 1250
+re: clean all
+
+.PHONY: all clean re 2 3 10 25 100 500 1250
