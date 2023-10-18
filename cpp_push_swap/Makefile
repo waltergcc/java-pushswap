@@ -24,6 +24,27 @@ clean:
 fclean: clean
 		${RM} ${NAME}
 
+2:	all
+		./$(NAME) $(shell shuf -i 1-2000 -n 2)
+
+3:	all
+		./$(NAME) $(shell shuf -i 1-2000 -n 3)
+
+10:	all
+		./$(NAME) $(shell shuf -i 1-2000 -n 10)
+
+25:	all
+		./$(NAME) $(shell shuf -i 1-2000 -n 25)
+
+100:	all
+		./$(NAME) $(shell shuf -i 1-2000 -n 100)
+
+500:	all
+		./$(NAME) $(shell shuf -i 1-2000 -n 500)
+
+1250:	all
+		./$(NAME) $(shell shuf -i 1-2000 -n 1250)
+
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re 2 3 10 25 100 500 1250

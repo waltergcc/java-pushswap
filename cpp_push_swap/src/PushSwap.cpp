@@ -120,10 +120,10 @@ void PushSwap::run()
 		this->_sortBig();
 
 	clock_t end = clock();
-	double time = double(end - start) / CLOCKS_PER_SEC; // in seconds
+	double time = double(end - start) / (CLOCKS_PER_SEC / 1000);	// in milliseconds
 	
 	std::cout << std::endl << "Total moves	: " << this->_countMoves << std::endl;
-	std::cout << "Expended time	: " << time << " seconds" << std::endl;
+	std::cout << "Expended time	: " << time << " milliseconds" << std::endl;
 	
 	pressEnter();	
 }
