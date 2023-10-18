@@ -10,6 +10,8 @@ public class PushSwap
 
 	private Deque<Info> stackA;
 	private Deque<Info> stackB;
+	private int			tmpMovesInA;
+	private int			tmpMovesInB;
 
 	// ---> Constructor --------------------------------------------------------
 
@@ -43,14 +45,14 @@ public class PushSwap
 		while (it.hasNext())
 		{
 			Info node = it.next();
-			System.out.println("n: " + node.number + " i: " + node.index + " p: " + node.pos + " w: " + node.whereFit);
+			System.out.print(node.number + " ");
 		}
 		System.out.println();
 		Iterator<Info> it2 = stackB.iterator();
 		while (it2.hasNext())
 		{
 			Info node = it2.next();
-			System.out.println("n: " + node.number + " i: " + node.index + " p: " + node.pos + " w: " + node.whereFit);
+			System.out.print(node.number + " ");
 		}
 		System.out.println();
 	}
@@ -206,7 +208,8 @@ public class PushSwap
 		while (!stackB.isEmpty())
 		{
 			whereItFitInA();
-			print();
+			calculateMoves();
+			doMoves();
 		}
 	}
 
@@ -275,6 +278,106 @@ public class PushSwap
 			}
 		}
 		return target;
+	}
+
+	private void calculateMoves()
+	{
+		int sizeA = stackA.size();
+		int sizeB = stackB.size();
+
+		Iterator<Info> it = stackB.iterator();
+		while (it.hasNext())
+		{
+			Info node = it.next();
+			node.setMovesInB(node.pos);
+			if (node.pos > sizeB / 2)
+				node.setMovesInB((sizeB - node.pos) * -1);
+			node.setMovesInA(node.whereFit);
+			if (node.whereFit > sizeA / 2)
+				node.setMovesInA((sizeA - node.whereFit) * -1);
+		}
+	}
+
+	private void doMoves()
+	{
+		int less = Integer.MAX_VALUE;
+		tmpMovesInA = 0;
+		tmpMovesInB = 0;
+
+		Iterator<Info> it = stackB.iterator();
+		while (it.hasNext())
+		{
+			Info node = it.next();
+			if (Math.abs(node.movesInA) + Math.abs(node.movesInB) < Math.abs(less))
+			{
+				less = Math.abs(node.movesInA) + Math.abs(node.movesInB);
+				tmpMovesInA = node.movesInA;
+				tmpMovesInB = node.movesInB;
+			}
+
+			if (tmpMovesInA < 0 && tmpMovesInB < 0)
+				reverseBoth();
+			else if (tmpMovesInA > 0 && tmpMovesInB > 0)
+				rotateBoth();
+			rotateA();
+			rotateB();
+
+			pa();
+		}
+	}
+
+	private void reverseBoth()
+	{
+		while (tmpMovesInA < 0 && tmpMovesInB < 0)
+		{
+			tmpMovesInA++;
+			tmpMovesInB++;
+			rrr();
+		}
+	}
+
+	private void rotateBoth()
+	{
+		while (tmpMovesInA > 0 && tmpMovesInB > 0)
+		{
+			tmpMovesInA--;
+			tmpMovesInB--;
+			rr();
+		}
+	}
+
+	private void rotateA()
+	{
+		while (tmpMovesInA != 0)
+		{
+			if (tmpMovesInA > 0)
+			{
+				tmpMovesInA--;
+				ra(true);
+			}
+			else if (tmpMovesInA < 0)
+			{
+				tmpMovesInA++;
+				rra(true);
+			}
+		}
+	}
+
+	private void rotateB()
+	{
+		while (tmpMovesInB != 0)
+		{
+			if (tmpMovesInB > 0)
+			{
+				tmpMovesInB--;
+				rb(true);
+			}
+			else if (tmpMovesInB < 0)
+			{
+				tmpMovesInB++;
+				rrb(true);
+			}
+		}
 	}
 
 	// ---> Private Moves methods ----------------------------------------------
