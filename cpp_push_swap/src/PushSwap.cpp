@@ -108,7 +108,9 @@ void PushSwap::run()
 
 	printTitle();
 	std::cout << "Moves:" << std::endl << std::endl;
+
 	this->_countMoves = 0;
+	clock_t start = clock();
 
 	if (this->_stackA.size() == 2)
 		this->_sa(true);
@@ -116,8 +118,12 @@ void PushSwap::run()
 		this->_sortSmall();
 	else
 		this->_sortBig();
+
+	clock_t end = clock();
+	double time = double(end - start) / CLOCKS_PER_SEC; // in seconds
 	
-	std::cout << std::endl << "Total moves: " << this->_countMoves << std::endl;
+	std::cout << std::endl << "Total moves	: " << this->_countMoves << std::endl;
+	std::cout << "Expended time	: " << time << " seconds" << std::endl;
 	
 	pressEnter();	
 }

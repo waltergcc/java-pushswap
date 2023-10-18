@@ -9,6 +9,7 @@
 #include <climits>
 #include <cstdlib>
 #include <algorithm>
+#include <ctime>
 
 #define CLEAR				"\033c"
 
