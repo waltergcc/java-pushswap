@@ -211,6 +211,8 @@ public class PushSwap
 			calculateMoves();
 			doMoves();
 		}
+		if (!isSorted())
+			lastSort();
 	}
 
 	private void pushAllSave3()
@@ -378,6 +380,42 @@ public class PushSwap
 				rrb(true);
 			}
 		}
+	}
+
+	private void lastSort()
+	{
+		int size = stackA.size();
+		int position = getLowerPosition();
+
+		if (position > size / 2)
+		{
+			while (position++ > size / 2)
+				rra(true);
+		}
+		else
+		{
+			while (position-- > 0)
+				ra(true);
+		}
+	}
+
+	private int getLowerPosition()
+	{
+		int minIndex = Integer.MAX_VALUE;
+		getCurrentPositions(stackA);
+
+		int lowPosition = stackA.peek().pos;
+		Iterator<Info> it = stackA.iterator();
+		while (it.hasNext())
+		{
+			Info node = it.next();
+			if (node.index < minIndex)
+			{
+				minIndex = node.index;
+				lowPosition = node.pos;
+			}
+		}
+		return lowPosition;
 	}
 
 	// ---> Private Moves methods ----------------------------------------------
