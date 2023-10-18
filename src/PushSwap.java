@@ -33,8 +33,8 @@ public class PushSwap
 			sa(true);
 		else if (stackA.size() == 3)
 			sortSmall();
-		// else
-		// 	sortBig();
+		else
+			sortBig();
 	}
 
 	public void print()
@@ -52,6 +52,7 @@ public class PushSwap
 			Info node = it2.next();
 			System.out.print(node.number + " ");
 		}
+		System.out.println();
 	}
 
 	// ---> Private Constructor Auxiliary methods ------------------------------
@@ -184,6 +185,35 @@ public class PushSwap
 		return false;
 	}
 
+	// ---> Private Sort Big methods -------------------------------------------
+
+	private void sortBig()
+	{
+		pushAllSave3();
+	}
+
+	private void pushAllSave3()
+	{
+		int size = stackA.size();
+		int moves = 0;
+
+		for (int i = 0; size > 6 && i < size && moves < size / 2; i++)
+		{
+			if (stackA.peek().index <= size / 2)
+			{
+				pb();
+				moves++;
+			}
+			else
+				ra(true);
+		}
+
+		for (; size - moves > 3; moves++)
+			pb();
+		
+		sortSmall();
+	}
+
 	// ---> Private Moves methods ----------------------------------------------
 
 	private void sortSmall()
@@ -192,7 +222,7 @@ public class PushSwap
 			return;
 		
 		int selector = checkFrontValues();
-		
+
 		if (selector == 1)
 			ra(true);
 		else if (selector == 2)
@@ -279,5 +309,19 @@ public class PushSwap
 		rra(false);
 		rrb(false);
 		System.out.println("rrr");
+	}
+
+	private void pa()
+	{
+		Info first = stackB.pop();
+		stackA.push(first);
+		System.out.println("pa");
+	}
+
+	private void pb()
+	{
+		Info first = stackA.pop();
+		stackB.push(first);
+		System.out.println("pb");
 	}
 }
