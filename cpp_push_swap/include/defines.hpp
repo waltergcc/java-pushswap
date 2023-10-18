@@ -10,6 +10,8 @@
 #include <cstdlib>
 #include <algorithm>
 
+#define CLEAR				"\033c"
+
 #define ALREADY_SORTED		"List is already sorted"
 #define NO_ARGUMENTS		"Error: no arguments"
 #define INVALID_ARG(arg)	"Error: invalid argument " + arg

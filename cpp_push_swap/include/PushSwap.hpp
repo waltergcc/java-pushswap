@@ -59,5 +59,5 @@ class PushSwap
 		~PushSwap();
 
 		void run();
-		void print();
+		void printList(bool sorted);
 };

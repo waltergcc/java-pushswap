@@ -6,7 +6,7 @@ int main(int ac, char **av)
 	{
 		PushSwap pushswap(ac, av);
 		pushswap.run();
-		pushswap.print();
+		pushswap.printList(true);
 	}
 	catch (const std::exception &e)
 	{

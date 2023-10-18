@@ -71,6 +71,22 @@ static size_t getLowerPosition(stackDeque s)
 	return lowPosistion;
 }
 
+static void printTitle()
+{
+	std::cout << CLEAR;
+	std::cout << "*********************************  " << std::endl;
+	std::cout << "*         C++ PUSH SWAP         *  " << std::endl;
+	std::cout << "*********************************  " << std::endl;
+	std::cout << std::endl;
+}
+
+static void pressEnter()
+{
+	std::cout << std::endl << "Press ENTER to continue" << std::endl;
+	std::cin.ignore();
+	std::cout << CLEAR;
+}
+
 // ---> Constructor and destructor ----------------------------------------------
 
 PushSwap::PushSwap(int ac, char **av)
@@ -87,6 +103,8 @@ void PushSwap::run()
 {
 	if (isSorted(this->_stackA))
 		throw std::runtime_error(ALREADY_SORTED);
+	
+	this->printList(false);
 
 	if (this->_stackA.size() == 2)
 		this->_sa(true);
@@ -96,19 +114,21 @@ void PushSwap::run()
 		this->_sortBig();
 }
 
-void PushSwap::print()
+void PushSwap::printList(bool sorted)
 {
+	printTitle();
+
+	if (sorted == true)
+		std::cout << "Sorted List:" << std::endl << std::endl;
+	else
+		std::cout << "Input List:" << std::endl << std::endl;
+	
 	for (stackDeque::iterator it = this->_stackA.begin(); it != this->_stackA.end(); it++)
 	{
 		std::cout << it->number << " ";
 	}
 	std::cout << std::endl;
-	for (stackDeque::iterator it = this->_stackB.begin(); it != this->_stackB.end(); it++)
-	{
-		std::cout << it->number << " ";
-	}
-
-	std::cout << std::endl;
+	pressEnter();
 }
 
 // ---> Private Cnstructor auxiliars ------------------------------------------
