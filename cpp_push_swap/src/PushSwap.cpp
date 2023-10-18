@@ -106,12 +106,20 @@ void PushSwap::run()
 	
 	this->printList(false);
 
+	printTitle();
+	std::cout << "Moves:" << std::endl << std::endl;
+	this->_countMoves = 0;
+
 	if (this->_stackA.size() == 2)
 		this->_sa(true);
  	else if (this->_stackA.size() == 3)
 		this->_sortSmall();
 	else
 		this->_sortBig();
+	
+	std::cout << std::endl << "Total moves: " << this->_countMoves << std::endl;
+	
+	pressEnter();	
 }
 
 void PushSwap::printList(bool sorted)
@@ -406,7 +414,10 @@ void	PushSwap::_sa(bool print)
 	this->_stackA[1] = tmp;
 
 	if (print)
+	{
 		std::cout << "sa" << std::endl;
+		this->_countMoves++;
+	}
 }
 
 void	PushSwap::_ra(bool print)
@@ -418,7 +429,10 @@ void	PushSwap::_ra(bool print)
 	this->_stackA.push_back(tmp);
 
 	if (print)
+	{
 		std::cout << "ra" << std::endl;
+		this->_countMoves++;
+	}
 }
 
 void	PushSwap::_rra(bool print)
@@ -430,7 +444,10 @@ void	PushSwap::_rra(bool print)
 	this->_stackA.push_front(tmp);
 
 	if (print)
+	{
 		std::cout << "rra" << std::endl;
+		this->_countMoves++;
+	}
 }
 
 void	PushSwap::_sb(bool print)
@@ -442,7 +459,10 @@ void	PushSwap::_sb(bool print)
 	this->_stackB[1] = tmp;
 
 	if (print)
+	{
 		std::cout << "sb" << std::endl;
+		this->_countMoves++;
+	}
 }
 
 void	PushSwap::_rb(bool print)
@@ -454,7 +474,10 @@ void	PushSwap::_rb(bool print)
 	this->_stackB.push_back(tmp);
 
 	if (print)
+	{
 		std::cout << "rb" << std::endl;
+		this->_countMoves++;
+	}
 }
 
 void	PushSwap::_rrb(bool print)
@@ -466,7 +489,10 @@ void	PushSwap::_rrb(bool print)
 	this->_stackB.push_front(tmp);
 	
 	if (print)
+	{
 		std::cout << "rrb" << std::endl;
+		this->_countMoves++;
+	}
 }
 
 void	PushSwap::_ss()
@@ -474,6 +500,7 @@ void	PushSwap::_ss()
 	this->_sa(false);
 	this->_sb(false);
 	std::cout << "ss" << std::endl;
+	this->_countMoves++;
 }
 
 void	PushSwap::_rr()
@@ -481,6 +508,7 @@ void	PushSwap::_rr()
 	this->_ra(false);
 	this->_rb(false);
 	std::cout << "rr" << std::endl;
+	this->_countMoves++;
 }
 
 void	PushSwap::_rrr()
@@ -488,6 +516,7 @@ void	PushSwap::_rrr()
 	this->_rra(false);
 	this->_rrb(false);
 	std::cout << "rrr" << std::endl;
+	this->_countMoves++;
 }
 
 void	PushSwap::_pa()
@@ -499,6 +528,7 @@ void	PushSwap::_pa()
 	this->_stackA.push_front(tmp);
 
 	std::cout << "pa" << std::endl;
+	this->_countMoves++;
 }
 
 void	PushSwap::_pb()
@@ -510,4 +540,5 @@ void	PushSwap::_pb()
 	this->_stackB.push_front(tmp);
 
 	std::cout << "pb" << std::endl;
+	this->_countMoves++;
 }

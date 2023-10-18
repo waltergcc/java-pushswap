@@ -19,6 +19,7 @@ class PushSwap
 	private:
 		stackDeque	_stackA;
 		stackDeque	_stackB;
+		size_t		_countMoves;
 
 		// Constructor auxiliars
 		void _checkInput(int ac, char **av);
