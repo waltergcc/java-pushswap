@@ -43,14 +43,14 @@ public class PushSwap
 		while (it.hasNext())
 		{
 			Info node = it.next();
-			System.out.print(node.number + " ");
+			System.out.println("n: " + node.number + " i: " + node.index + " p: " + node.pos + " w: " + node.whereFit);
 		}
 		System.out.println();
 		Iterator<Info> it2 = stackB.iterator();
 		while (it2.hasNext())
 		{
 			Info node = it2.next();
-			System.out.print(node.number + " ");
+			System.out.println("n: " + node.number + " i: " + node.index + " p: " + node.pos + " w: " + node.whereFit);
 		}
 		System.out.println();
 	}
@@ -185,11 +185,29 @@ public class PushSwap
 		return false;
 	}
 
+	private void getCurrentPositions(Deque<Info> s)
+	{
+		int pos = 0;
+		Iterator<Info> it = s.iterator();
+		while (it.hasNext())
+		{
+			Info node = it.next();
+			node.setPos(pos);
+			pos++;
+		}
+	}
+	
 	// ---> Private Sort Big methods -------------------------------------------
 
 	private void sortBig()
 	{
 		pushAllSave3();
+
+		while (!stackB.isEmpty())
+		{
+			whereItFitInA();
+			print();
+		}
 	}
 
 	private void pushAllSave3()
@@ -212,6 +230,51 @@ public class PushSwap
 			pb();
 		
 		sortSmall();
+	}
+
+	private void whereItFitInA()
+	{
+		getCurrentPositions(stackA);
+		getCurrentPositions(stackB);
+
+		Iterator<Info> it = stackB.iterator();
+		while (it.hasNext())
+		{
+			Info node = it.next();
+			node.setWhereFit(getTargetPosition(node.index));
+		}
+	}
+
+	private int getTargetPosition(int index)
+	{
+		int max = Integer.MAX_VALUE;
+		int target = -1;
+
+		Iterator<Info> it = stackA.iterator();
+		while (it.hasNext())
+		{
+			Info node = it.next();
+			if (node.index > index && node.index < max)
+			{
+				max = node.index;
+				target = node.pos;
+			}
+		}
+
+		if (target != Integer.MAX_VALUE)
+			return target;
+		
+		it = stackA.iterator();
+		while (it.hasNext())
+		{
+			Info node = it.next();
+			if (node.index < max)
+			{
+				max = node.index;
+				target = node.pos;
+			}
+		}
+		return target;
 	}
 
 	// ---> Private Moves methods ----------------------------------------------

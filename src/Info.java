@@ -21,4 +21,24 @@ public class Info
 	{
 		this.index = index;
 	}
+
+	public void setPos(int pos)
+	{
+		this.pos = pos;
+	}
+
+	public void setWhereFit(int whereFit)
+	{
+		this.whereFit = whereFit;
+	}
+
+	public void setMovesInA(int movesInA)
+	{
+		this.movesInA = movesInA;
+	}
+
+	public void setMovesInB(int movesInB)
+	{
+		this.movesInB = movesInB;
+	}
 }
