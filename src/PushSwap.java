@@ -14,6 +14,8 @@ public class PushSwap
 	private int			tmpMovesInB;
 	private int			countMoves;
 
+	private static Scanner scanner = new Scanner(System.in);
+
 	// ---> Constructor --------------------------------------------------------
 
 	public PushSwap(String[] args) throws Exception
@@ -48,6 +50,7 @@ public class PushSwap
 		
 		System.out.println("\nTotal moves: " + countMoves);
 		pressEnter();
+		scanner.close();
 	}
 
 	public void printList(boolean sorted)
@@ -153,9 +156,7 @@ public class PushSwap
 	private void pressEnter()
 	{
 		System.out.println("\nPress ENTER to continue");
-		Scanner in = new Scanner(System.in);
-		in.nextLine();
-		in.close();
+		scanner.nextLine();
 		System.out.println("\033c");
 	}
 
