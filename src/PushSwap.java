@@ -28,6 +28,13 @@ public class PushSwap
 	{
 		if (isSorted())
 			throw new Exception("List is already sorted");
+		
+		if (stackA.size() == 2)
+			sa(true);
+		else if (stackA.size() == 3)
+			sortSmall();
+		// else
+		// 	sortBig();
 	}
 
 	public void print()
@@ -131,5 +138,146 @@ public class PushSwap
 			prev = node.number;
 		}
 		return true;
+	}
+
+	private int getMaxID()
+	{
+		int max = 0;
+		Iterator<Info> it = stackA.iterator();
+		while (it.hasNext())
+		{
+			Info node = it.next();
+			if (node.index > max)
+				max = node.index;
+		}
+		return max;
+	}
+
+	private int checkFrontValues()
+	{
+		int maxID = getMaxID();
+		int selector = 0;
+
+		Info first = stackA.pop();
+		Info second = stackA.pop();
+
+		if (first.index == maxID)
+			selector = 1;
+		else if (second.index == maxID)
+			selector = 2;
+
+		stackA.push(second);
+		stackA.push(first);
+
+		return selector;
+	}
+
+	private boolean firstIsGreater()
+	{
+		Info first = stackA.pop();
+		Info second = stackA.pop();
+		stackA.push(second);
+		stackA.push(first);
+
+		if (first.index > second.index)
+			return true;
+		return false;
+	}
+
+	// ---> Private Moves methods ----------------------------------------------
+
+	private void sortSmall()
+	{
+		if (isSorted())
+			return;
+		
+		int selector = checkFrontValues();
+		
+		if (selector == 1)
+			ra(true);
+		else if (selector == 2)
+			rra(true);
+		
+		if (firstIsGreater())
+			sa(true);
+	}
+
+	private void sa(boolean print)
+	{
+		Info first = stackA.pop();
+		Info second = stackA.pop();
+		stackA.push(first);
+		stackA.push(second);
+
+		if (print)
+			System.out.println("sa");
+	}
+
+	private void sb(boolean print)
+	{
+		Info first = stackB.pop();
+		Info second = stackB.pop();
+		stackB.push(first);
+		stackB.push(second);
+
+		if (print)
+			System.out.println("sb");
+	}
+
+	private void ss()
+	{
+		sa(false);
+		sb(false);
+		System.out.println("ss");
+	}
+
+	private void ra(boolean print)
+	{
+		Info first = stackA.pop();
+		stackA.addLast(first);
+
+		if (print)
+			System.out.println("ra");
+	}
+
+	private void rb(boolean print)
+	{
+		Info first = stackB.pop();
+		stackB.addLast(first);
+
+		if (print)
+			System.out.println("rb");
+	}
+
+	private void rr()
+	{
+		ra(false);
+		rb(false);
+		System.out.println("rr");
+	}
+
+	private void rra(boolean print)
+	{
+		Info last = stackA.removeLast();
+		stackA.push(last);
+
+		if (print)
+			System.out.println("rra");
+	}
+
+	private void rrb(boolean print)
+	{
+		Info last = stackB.removeLast();
+		stackB.push(last);
+
+		if (print)
+			System.out.println("rrb");
+	}
+
+	private void rrr()
+	{
+		rra(false);
+		rrb(false);
+		System.out.println("rrr");
 	}
 }
