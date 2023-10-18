@@ -16,4 +16,9 @@ public class Info
 		this.movesInA = -1;
 		this.movesInB = -1;
 	}
+
+	public void setIndex(int index)
+	{
+		this.index = index;
+	}
 }

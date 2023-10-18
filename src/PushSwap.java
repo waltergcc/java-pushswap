@@ -6,8 +6,12 @@ import java.lang.Exception;
 
 public class PushSwap
 {
+	// ---> Attributes ---------------------------------------------------------
+
 	private Deque<Info> stackA;
 	private Deque<Info> stackB;
+
+	// ---> Constructor --------------------------------------------------------
 
 	public PushSwap(String[] args) throws Exception
 	{
@@ -15,22 +19,29 @@ public class PushSwap
 		stackB = new ArrayDeque<Info>();
 
 		checkInput(args);
+		setStackAIndex();
 	}
+
+	// ---> Public methods -----------------------------------------------------
 
 	public void print()
 	{
 		Iterator<Info> it = stackA.iterator();
 		while (it.hasNext())
 		{
-			System.out.print(it.next().number + " ");
+			Info node = it.next();
+			System.out.println(node.number + " | " + node.index);
 		}
 		System.out.println();
 		Iterator<Info> it2 = stackB.iterator();
 		while (it2.hasNext())
 		{
-			System.out.print(it2.next().number + " ");
+			Info node = it2.next();
+			System.out.print(node.number + " | " + node.index + ", ");
 		}
 	}
+
+	// ---> Private Constructor Auxiliary methods ------------------------------
 
 	private void checkInput(String[] args) throws Exception
 	{
@@ -80,5 +91,23 @@ public class PushSwap
 		return false;
 	}
 
-
+	private void setStackAIndex()
+	{
+		for (int i = stackA.size(); i > 0; i--)
+		{
+			Iterator<Info> it = stackA.iterator();
+			int max = Integer.MIN_VALUE;
+			Info tmp = null;
+			while (it.hasNext())
+			{
+				Info node = it.next();
+				if (node.index == 0 && node.number > max)
+				{
+					max = node.number;
+					tmp = node;
+				}
+			}
+			tmp.setIndex(i);
+		}
+	}
 }
