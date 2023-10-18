@@ -29,13 +29,13 @@ To get started with this project, you'll need to have Java and a Java compiler i
 1. Clone the repository:
 
    ```sh
-   git clone ***
+   git clone https://github.com/waltergcc/java-pushswap.git
    ```
 
 2. Navigate to the project directory:
 
    ```sh
-   cd ***
+   cd java-pushswap/
    ```
 
 3. Compile the Java source code:
@@ -59,4 +59,4 @@ java -cp src Main 2 1 3 6 5 8 7 4 9 10 # or any other list of integers
 ```
 
 ## Disclaimer
-I used this project as a challenge to write code in other languages. As I've been more accustomed to writing in C lately, so I started by writing it in an object-oriented language I'm already familiar with, which is C++. This made it much easier to write the code, so I've completed the Java version. I've left the C++ code in this [folder]() for future reference.
+I used this project as a challenge to write code in other languages. As I've been more accustomed to writing in C lately, so I started by writing it in an object-oriented language I'm already familiar with, which is C++. This made it much easier to write the code, so I've completed the Java version. I've left the C++ code in this [folder](https://github.com/waltergcc/java-pushswap/tree/main/cpp_push_swap) for future reference.
