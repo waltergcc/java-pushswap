@@ -40,6 +40,7 @@ public class PushSwap
 		System.out.println("Moves:\n");
 
 		countMoves = 0;
+		long start = System.nanoTime();
 
 		if (stackA.size() == 2)
 			sa(true);
@@ -48,7 +49,11 @@ public class PushSwap
 		else
 			sortBig();
 		
-		System.out.println("\nTotal moves: " + countMoves);
+		long end = System.nanoTime();
+		double time = (double)(end - start) / 1000000.0;
+		
+		System.out.println("\nTotal moves:	" + countMoves);
+		System.out.println("Expended time:	" + time + " milliseconds");
 		pressEnter();
 		scanner.close();
 	}
