@@ -1,7 +1,6 @@
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Iterator;
-import java.util.ListIterator;
 import java.lang.Exception;
 
 public class PushSwap
@@ -451,24 +450,6 @@ public class PushSwap
 
 		if (print)
 			System.out.println("sa");
-	}
-
-	private void sb(boolean print)
-	{
-		Info first = stackB.pop();
-		Info second = stackB.pop();
-		stackB.push(first);
-		stackB.push(second);
-
-		if (print)
-			System.out.println("sb");
-	}
-
-	private void ss()
-	{
-		sa(false);
-		sb(false);
-		System.out.println("ss");
 	}
 
 	private void ra(boolean print)

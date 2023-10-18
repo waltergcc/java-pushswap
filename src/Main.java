@@ -1,6 +1,3 @@
-import java.util.*;
-import java.lang.*;
-import java.io.*;
 import java.lang.Exception;
 
 public class Main
